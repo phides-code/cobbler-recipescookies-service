@@ -1,0 +1,8 @@
+.env
+.aws-sam/
+post-data.json
+curl.md
+private_key.pem
+public_key.pem
+notes.md
+private_key_base64.txt

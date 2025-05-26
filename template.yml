@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda function to generate CloudFront signed cookies
+
+Parameters:
+  CFDomain:
+    Type: String
+    Description: The CloudFront domain for which signed cookies will be issued
+  CFKeyPairId:
+    Type: String
+    Description: The CloudFront public key pair ID
+  CFPrivateKey:
+    Type: String
+    Description: The private key for signing CloudFront cookies
+
+Resources:
+  CobblerSignedcookieFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: CobblerSignedcookieGenerator
+      Runtime: go1.x
+      Handler: main
+      CodeUri: .
+      MemorySize: 128
+      Timeout: 5
+      Environment:
+        Variables:
+          CF_DOMAIN: !Ref CFDomain
+          CF_KEY_PAIR_ID: !Ref CFKeyPairId
+          CF_PRIVATE_KEY: !Ref CFPrivateKey
+      Events:
+        ApiTrigger:
+          Type: Api
+          Properties:
+            Path: /recipescookies
+            Method: GET
+      Policies:
+        - AWSLambdaBasicExecutionRole
