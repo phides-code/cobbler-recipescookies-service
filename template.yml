@@ -14,10 +14,10 @@ Parameters:
     Description: The private key for signing CloudFront cookies
 
 Resources:
-  CobblerSignedcookieFunction:
+  CobblerRecipescookiesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: CobblerSignedcookieGenerator
+      FunctionName: CobblerRecipescookiesGenerator
       Timeout: 10
       Handler: bootstrap
       Runtime: provided.al2023
