@@ -18,11 +18,10 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: CobblerSignedcookieGenerator
-      Runtime: go1.x
-      Handler: main
-      CodeUri: .
-      MemorySize: 128
-      Timeout: 5
+      Timeout: 10
+      Handler: bootstrap
+      Runtime: provided.al2023
+      MemorySize: 512
       Environment:
         Variables:
           CF_DOMAIN: !Ref CFDomain
