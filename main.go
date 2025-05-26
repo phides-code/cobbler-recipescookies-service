@@ -55,7 +55,7 @@ func init() {
 	cfSigner = sign.NewCookieSigner(cfKeyPairId, parsedKey)
 
 	// Set resource path and expiration
-	resourcePath = cfDomain + "/recipes*"
+	resourcePath = "https://" + cfDomain + "/recipes*"
 	expiresInDuration = 1 * time.Hour
 
 	log.Printf(
