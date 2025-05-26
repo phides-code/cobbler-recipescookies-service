@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/rsa"
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
@@ -39,10 +40,15 @@ func init() {
 		log.Fatal("Failed to parse PEM block from decoded private key")
 	}
 
-	// Parse RSA key
-	parsedKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	// Use PKCS#8 parser instead of PKCS#1
+	parsedKeyAny, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 	if err != nil {
-		log.Fatalf("Failed to parse RSA private key: %v", err)
+		log.Fatalf("Failed to parse PKCS#8 private key: %v", err)
+	}
+	// Assert that it's an RSA private key
+	parsedKey, ok := parsedKeyAny.(*rsa.PrivateKey)
+	if !ok {
+		log.Fatal("Parsed key is not an RSA private key")
 	}
 
 	// Create signer
